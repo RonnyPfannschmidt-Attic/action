@@ -1,8 +1,13 @@
 from collections import namedtuple, deque
 
-Message = namedtuple('Message', [
+MessageBase = namedtuple('Message', [
     'target', 'source', 'data',
 ])
+
+
+class Message(MessageBase):
+    def reply(self, data):
+        return Message(target=self.source, source=self.target, data=data)
 
 class MessageQueue(object):
 
@@ -15,6 +20,11 @@ class MessageQueue(object):
     def run_once(self):
 
         message = self.messages.popleft()
-        message.target.handle(message)
+        new_messages = message.target.handle(message)
+        if new_messages is not None:
+            self.messages.extend(new_messages)
 
+    def run_all(self):
+        while self.messages:
+            self.run_once()
 
