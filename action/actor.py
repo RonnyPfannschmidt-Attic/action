@@ -1,13 +1,14 @@
 from collections import deque
-class Actor(object):
 
+
+class Actor(object):
     def handle(self, message):
         raise NotImplementedError
 
 
 class Null(Actor):
     def handle(self, message):
-        return
+        return []
 
 
 class QueueActor(Actor):
@@ -30,8 +31,3 @@ class QueueActor(Actor):
                 ]
 
         assert 0
-
-
-
-
-
