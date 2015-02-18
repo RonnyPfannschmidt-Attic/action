@@ -1,3 +1,4 @@
 \.cache
 __cache__
 .*\.pyc
+\.env(|3)/

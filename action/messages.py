@@ -5,6 +5,9 @@ MessageBase = namedtuple('Message', [
 ])
 
 
+
+
+
 class Message(MessageBase):
     def reply(self, data):
         return Message(target=self.source, source=self.target, data=data)

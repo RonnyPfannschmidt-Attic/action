@@ -1,6 +1,23 @@
 from collections import deque
 
 
+
+class InstanceDispatcher(object):
+    def __init__(self, dispatcher, instance):
+        self.instance = instance
+        self.dispatcher = dispatcher
+
+    def __call__(self, message):
+        class_ = type(message)
+
+
+
+
+class Dispatcher(object):
+    def __get__(self, instance, class):
+        return InstanceDispatcher(instance, self)
+
+
 class Actor(object):
     def handle(self, message):
         raise NotImplementedError
@@ -9,6 +26,9 @@ class Actor(object):
 class Null(Actor):
     def handle(self, message):
         return []
+
+
+
 
 
 class QueueActor(Actor):
